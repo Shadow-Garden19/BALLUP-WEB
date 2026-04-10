@@ -1530,9 +1530,10 @@
     var prenom = document.getElementById('wl-prenom').value;
     var nom = document.getElementById('wl-nom').value;
     var email = document.getElementById('wl-email').value;
+    var tel = document.getElementById('wl-tel').value;
     // Send to ballup email via mailto
     var subject = encodeURIComponent("Inscription liste d'attente BALLUP");
-    var body = encodeURIComponent('Prénom : ' + prenom + '\nNom : ' + nom + '\nEmail : ' + email);
+    var body = encodeURIComponent('Prénom : ' + prenom + '\nNom : ' + nom + '\nEmail : ' + email + '\nTéléphone : ' + tel);
     window.location.href = 'mailto:ballup.inf@gmail.com?subject=' + subject + '&body=' + body;
     // Show success
     document.getElementById('waitlist-form').style.display = 'none';
@@ -1554,7 +1555,8 @@
         <input id="wl-prenom" type="text" placeholder="Prénom" style="flex:1;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:0.75rem 1rem;color:var(--text);font-family:'DM Sans',sans-serif;font-size:0.95rem;outline:none;" onfocus="this.style.borderColor='var(--gold)'" onblur="this.style.borderColor='var(--border)'">
         <input id="wl-nom" type="text" placeholder="Nom" style="flex:1;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:0.75rem 1rem;color:var(--text);font-family:'DM Sans',sans-serif;font-size:0.95rem;outline:none;" onfocus="this.style.borderColor='var(--gold)'" onblur="this.style.borderColor='var(--border)'">
       </div>
-      <input id="wl-email" type="email" placeholder="Adresse email" style="width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:0.75rem 1rem;color:var(--text);font-family:'DM Sans',sans-serif;font-size:0.95rem;outline:none;margin-bottom:1rem;" onfocus="this.style.borderColor='var(--gold)'" onblur="this.style.borderColor='var(--border)'">
+      <input id="wl-email" type="email" placeholder="Adresse email" autocomplete="email" style="width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:0.75rem 1rem;color:var(--text);font-family:'DM Sans',sans-serif;font-size:0.95rem;outline:none;margin-bottom:0.75rem;" onfocus="this.style.borderColor='var(--gold)'" onblur="this.style.borderColor='var(--border)'">
+      <input id="wl-tel" name="SMS" type="tel" inputmode="tel" autocomplete="tel" placeholder="Téléphone" style="width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:0.75rem 1rem;color:var(--text);font-family:'DM Sans',sans-serif;font-size:0.95rem;outline:none;margin-bottom:1rem;" onfocus="this.style.borderColor='var(--gold)'" onblur="this.style.borderColor='var(--border)'">
       <button onclick="submitWaitlist(event)" style="width:100%;padding:0.9rem;background:linear-gradient(135deg,var(--gold-light),var(--gold),var(--gold-dark));border:none;border-radius:8px;color:#0A0A08;font-family:'Syne',sans-serif;font-weight:700;font-size:1rem;cursor:pointer;letter-spacing:0.05em;">M'inscrire sur la liste d'attente</button>
     </div>
     <div id="wl-success" style="display:none;padding:1rem;">
