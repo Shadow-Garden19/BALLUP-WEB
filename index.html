@@ -1533,7 +1533,7 @@
     // Send to ballup email via mailto
     var subject = encodeURIComponent("Inscription liste d'attente BALLUP");
     var body = encodeURIComponent('Prénom : ' + prenom + '\nNom : ' + nom + '\nEmail : ' + email);
-    window.open('mailto:ballup.app@gmail.com?subject=' + subject + '&body=' + body);
+    window.location.href = 'mailto:ballup.inf@gmail.com?subject=' + subject + '&body=' + body;
     // Show success
     document.getElementById('waitlist-form').style.display = 'none';
     document.getElementById('wl-success').style.display = 'block';
