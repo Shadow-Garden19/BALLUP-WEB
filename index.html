@@ -833,6 +833,10 @@
     opacity: 1;
     pointer-events: auto;
   }
+  /* Au-dessus du curseur custom (z-index 9999) pour garantir clics fiables sur la liste d'attente */
+  #modal-waitlist.modal-open {
+    z-index: 10050;
+  }
   .modal-box {
     background: var(--surface);
     border: 1px solid rgba(201,168,76,0.25);
@@ -994,6 +998,10 @@
   #modal-waitlist .waitlist-brevo .sib-sms-select__phone-number::placeholder {
     color: var(--muted) !important;
     opacity: 1 !important;
+  }
+  #modal-waitlist .waitlist-brevo .sib-form-block {
+    position: relative;
+    z-index: 2;
   }
   #modal-waitlist .waitlist-brevo .sib-form-block__button {
     width: 100%;
@@ -1661,7 +1669,7 @@
 <!-- MODAL MENTIONS LÉGALES -->
 <!-- MODAL WAITLIST -->
 <div class="modal-overlay" id="modal-waitlist" onclick="if(event.target===this)this.classList.remove('modal-open')">
-  <div class="modal-box" style="max-width:480px;text-align:center;">
+  <div class="modal-box" style="max-width:480px;text-align:center;" onclick="event.stopPropagation()">
     <button class="modal-close" onclick="document.getElementById('modal-waitlist').classList.remove('modal-open')">✕</button>
     <div style="font-size:2.5rem;margin-bottom:0.5rem;">🏅</div>
     <h2 style="font-family:'Syne',sans-serif;font-size:1.5rem;background:linear-gradient(135deg,var(--gold-light),var(--gold),var(--gold-dark));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:0.5rem;">Application bientôt disponible !</h2>
@@ -1682,7 +1690,7 @@
       </div>
       <div></div>
       <div id="sib-container" class="sib-container--large sib-container--vertical" style="text-align:left; background-color:transparent; max-width:none; border:none; direction:ltr">
-        <form id="sib-form" method="POST" action="https://88310869.sibforms.com/serve/MUIFADjHz3raZH0Kqf1seEpBhY-9MejJ7smeD1TKGlZsCE168JMMXFImY9fSo5TkGZQSCckz9K2hIGLHwzegBH_HHbPuTxihHD88q-eHbUvSxpY7pm9NCwjgn6WoM7JnuD7b4SoMcYjwCuJgWpygYAKWfCKGKbARJ2I9GyQnvouzgXqbhTCqMxjWz1k-nNdEBR3ugtK-XkkZ1ZZxzA==" data-type="subscription">
+        <form id="sib-form" class="sib-form" method="POST" action="https://88310869.sibforms.com/serve/MUIFADjHz3raZH0Kqf1seEpBhY-9MejJ7smeD1TKGlZsCE168JMMXFImY9fSo5TkGZQSCckz9K2hIGLHwzegBH_HHbPuTxihHD88q-eHbUvSxpY7pm9NCwjgn6WoM7JnuD7b4SoMcYjwCuJgWpygYAKWfCKGKbARJ2I9GyQnvouzgXqbhTCqMxjWz1k-nNdEBR3ugtK-XkkZ1ZZxzA==" data-type="subscription">
           <div style="display:flex;gap:0.75rem;margin-bottom:0.75rem;">
             <div class="sib-input sib-form-block" style="flex:1;margin:0;padding:0;">
               <div class="form__entry entry_block">
