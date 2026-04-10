@@ -937,6 +937,64 @@
     min-width: 5.75rem;
   }
   #modal-waitlist .waitlist-brevo .sib-sms-input > .entry__field:last-child { flex: 1; min-width: 0; }
+  /* Widget téléphone Brevo (.sib-sms-select) : même « bulle » sombre que prénom / email */
+  #modal-waitlist .waitlist-brevo .sib-sms-select { font-family: 'DM Sans', sans-serif; }
+  #modal-waitlist .waitlist-brevo .sib-sms-select__title {
+    background: var(--surface2) !important;
+    border: 1px solid var(--border) !important;
+    border-radius: 8px !important;
+    color: var(--text) !important;
+    font-family: 'DM Sans', sans-serif !important;
+    font-size: 0.95rem !important;
+  }
+  #modal-waitlist .waitlist-brevo .sib-sms-select__title::after {
+    border-top-color: var(--gold) !important;
+  }
+  #modal-waitlist .waitlist-brevo .sib-sms-select__list {
+    background: var(--surface2) !important;
+    border: 1px solid var(--border) !important;
+    border-radius: 8px !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  }
+  #modal-waitlist .waitlist-brevo .sib-sms-select__list li {
+    border-bottom-color: var(--border) !important;
+    color: var(--text) !important;
+    font-size: 0.95rem !important;
+  }
+  #modal-waitlist .waitlist-brevo .sib-sms-select__list li:hover,
+  #modal-waitlist .waitlist-brevo .sib-sms-select__list li.sib-is-selected {
+    background-color: rgba(201, 168, 76, 0.15) !important;
+  }
+  #modal-waitlist .waitlist-brevo .sib-sms-select__number-input {
+    background: var(--surface2) !important;
+    border: 1px solid var(--border) !important;
+    border-radius: 8px !important;
+    height: auto !important;
+    min-height: calc(0.75rem * 2 + 1.2em + 2px);
+    align-items: stretch;
+  }
+  #modal-waitlist .waitlist-brevo .sib-sms-select__number-input:focus-within {
+    border-color: var(--gold) !important;
+  }
+  #modal-waitlist .waitlist-brevo .sib-sms-select__calling-code {
+    background: transparent !important;
+    border: none !important;
+    border-right: 1px solid var(--border) !important;
+    color: var(--text) !important;
+    font-family: 'DM Sans', sans-serif !important;
+  }
+  #modal-waitlist .waitlist-brevo .sib-sms-select__phone-number {
+    background: transparent !important;
+    color: var(--text) !important;
+    font-family: 'DM Sans', sans-serif !important;
+    font-size: 0.95rem !important;
+  }
+  #modal-waitlist .waitlist-brevo .sib-sms-field input::placeholder,
+  #modal-waitlist .waitlist-brevo .sib-sms-field textarea::placeholder,
+  #modal-waitlist .waitlist-brevo .sib-sms-select__phone-number::placeholder {
+    color: var(--muted) !important;
+    opacity: 1 !important;
+  }
   #modal-waitlist .waitlist-brevo .sib-form-block__button {
     width: 100%;
     padding: 0.9rem !important;
