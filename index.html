@@ -1008,6 +1008,50 @@
       width: 100% !important;
       min-width: 0 !important;
     }
+    /* Messages Brevo (ex. succès vert) : rester dans la bulle sur petit écran */
+    #modal-waitlist #sib-form-container.waitlist-brevo,
+    #modal-waitlist .waitlist-brevo {
+      max-width: 100%;
+      min-width: 0;
+    }
+    #modal-waitlist .waitlist-brevo .sib-form-message-panel {
+      width: 100%;
+      max-width: 100% !important;
+      box-sizing: border-box;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
+    #modal-waitlist .waitlist-brevo .sib-form-message-panel__text {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 0.35rem;
+      max-width: 100%;
+      min-width: 0;
+      box-sizing: border-box;
+    }
+    #modal-waitlist .waitlist-brevo .sib-form-message-panel .sib-notification__icon {
+      flex-shrink: 0;
+    }
+    #modal-waitlist .waitlist-brevo .sib-form-message-panel__inner-text {
+      flex: 1 1 12rem;
+      min-width: 0;
+      max-width: 100%;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
+    #modal-waitlist #sib-container {
+      max-width: 100% !important;
+      min-width: 0 !important;
+    }
+    #modal-waitlist #sib-form > div:first-of-type {
+      max-width: 100%;
+      min-width: 0;
+    }
+    #modal-waitlist #sib-form .sib-input.sib-form-block {
+      min-width: 0;
+    }
   }
 
   @media (max-width: 480px) {
@@ -1140,6 +1184,14 @@
     overflow: visible !important;
     overflow-x: visible !important;
     overflow-y: visible !important;
+  }
+  /* Mobile : message succès + formulaire — scroll interne pour ne pas faire sortir le CTA de la bulle (listes pays Brevo souvent sous body) */
+  @media (max-width: 900px) {
+    #modal-waitlist.modal-open .modal-box {
+      overflow-x: hidden !important;
+      overflow-y: auto !important;
+      -webkit-overflow-scrolling: touch;
+    }
   }
   /* Curseur système sur la liste d'attente (classe ajoutée par JS — évite les soucis avec :has() / curseur custom) */
   body.waitlist-modal-open {
@@ -1890,7 +1942,7 @@
       </div>
       <div class="faq-item reveal reveal-delay-2">
         <div class="faq-question" onclick="toggleFaq(this)"><span>Comment contacter l'équipe BALLUP ?</span><span class="faq-icon">+</span></div>
-        <div class="faq-answer">Contactez-nous à <a href="/cdn-cgi/l/email-protection#6d0f04021e1d021f191e430c1d1d2d0a000c0401430e0200" style="color:var(--gold)"><span class="__cf_email__" data-cfemail="12707b7d61627d6066613c73626252757f737b7e3c717d7f">[email&#160;protected]</span></a>. Nous répondons généralement sous 24 à 48 heures.</div>
+        <div class="faq-answer">Contactez-nous à <a href="mailto:ballup.inf@gmail.com" style="color:var(--gold)">ballup.inf@gmail.com</a>. Nous répondons généralement sous 24 à 48 heures.</div>
       </div>
     </div>
   </div>
