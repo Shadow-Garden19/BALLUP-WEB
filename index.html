@@ -315,7 +315,7 @@
     transform: translateY(-1px);
   }
 
-  /* Visuel app : image ballup-app.png + entrée balayage vers la droite */
+  /* Visuel app : ballup-app.jpg (ou .png) + entrée balayage vers la droite */
   @keyframes phoneSwipeIn {
     from {
       opacity: 0;
@@ -1661,7 +1661,7 @@
 
 <div class="phone-section">
   <div class="phone-visual">
-    <img src="ballup-app.png" alt="Application BALLUP" decoding="async" />
+    <img src="ballup-app.jpg" alt="Application BALLUP" decoding="async" onerror="this.onerror=null;this.src='ballup-app.png';" />
   </div>
 </div>
 <!-- STATS -->
