@@ -16,6 +16,14 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://sibforms.com/forms/end-form/build/sib-styles.css">
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
 <style>
   :root {
     --gold: #C9A84C;
@@ -32,7 +40,10 @@
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
+  html {
+    scroll-behavior: smooth;
+    background: var(--black);
+  }
 
   body {
     background: var(--black);
@@ -61,6 +72,45 @@
   .cursor.big {
     width: 44px; height: 44px;
     background: rgba(201,168,76,0.4);
+  }
+
+  /* Fond 3D (Three.js) — apparition au chargement du modèle */
+  #bg-3d-root {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+    opacity: 0;
+    transform: scale(0.97);
+    transition:
+      opacity 1.15s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 1.15s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  #bg-3d-root.bg-3d-visible {
+    opacity: 1;
+    transform: scale(1);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    #bg-3d-root {
+      transition: none;
+    }
+  }
+
+  #bg-3d-canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+  #bg-3d-overlay {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 100% 85% at 50% 38%, rgba(8,8,6,0.28) 0%, rgba(8,8,6,0.72) 48%, rgba(8,8,6,0.94) 100%);
+    pointer-events: none;
+  }
+  body > *:not(#bg-3d-root):not(.cursor):not(.modal-overlay) {
+    position: relative;
+    z-index: 1;
   }
 
   /* NAV */
@@ -136,6 +186,7 @@
     inset: 0;
     background: radial-gradient(ellipse 80% 60% at 50% 80%, rgba(201,168,76,0.1) 0%, transparent 60%);
     pointer-events: none;
+    opacity: 0.88;
   }
   .hero-grid {
     position: absolute;
@@ -1659,6 +1710,11 @@
 </head>
 <body>
 
+<div id="bg-3d-root" aria-hidden="true">
+  <canvas id="bg-3d-canvas"></canvas>
+  <div id="bg-3d-overlay"></div>
+</div>
+
 <div class="cursor" id="cursor"></div>
 
 <!-- NAV -->
@@ -2341,6 +2397,130 @@
       setTimeout(bumpSmsCountryLayer, 200);
     }, true);
   });
+</script>
+<script type="module">
+  import * as THREE from 'three';
+  import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+  import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+
+  const canvas = document.getElementById('bg-3d-canvas');
+  if (!canvas) throw new Error('bg-3d-canvas manquant');
+  const bg3dRoot = document.getElementById('bg-3d-root');
+  function revealBg3D() {
+    if (!bg3dRoot) return;
+    requestAnimationFrame(function () {
+      bg3dRoot.classList.add('bg-3d-visible');
+    });
+  }
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(42, 1, 0.08, 200);
+  camera.position.set(0, 0.15, 3.6);
+
+  const renderer = new THREE.WebGLRenderer({
+    canvas,
+    alpha: true,
+    antialias: true,
+    powerPreference: 'high-performance'
+  });
+  renderer.setClearColor(0x000000, 0);
+  renderer.outputColorSpace = THREE.SRGBColorSpace;
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  /* Légèrement plus haut : le métal réagit à l’env ; proche d’un rendu type logo 3D glossy */
+  renderer.toneMappingExposure = 1.18;
+
+  const pmrem = new THREE.PMREMGenerator(renderer);
+  const roomScene = new RoomEnvironment();
+  scene.environment = pmrem.fromScene(roomScene, 0.04).texture;
+  roomScene.dispose();
+  pmrem.dispose();
+
+  /* Lumières douces : les reflets viulent surtout de scene.environment */
+  const hemi = new THREE.HemisphereLight(0xf3eee6, 0x0d0c0a, 0.42);
+  const key = new THREE.DirectionalLight(0xfff5e6, 0.55);
+  key.position.set(4.2, 6.5, 5);
+  const brandRgb = { r: 219, g: 161, b: 0 };
+  const brandColor = new THREE.Color(brandRgb.r / 255, brandRgb.g / 255, brandRgb.b / 255);
+  const rim = new THREE.DirectionalLight(brandColor, 0.35);
+  rim.position.set(-4, 2.5, -5);
+  const fill = new THREE.DirectionalLight(0xffc966, 0.12);
+  fill.position.set(0, -2, 6);
+  scene.add(hemi, key, rim, fill);
+
+  function applyMetallicGoldToModel(root) {
+    root.traverse(function (child) {
+      if (!child.isMesh) return;
+      var mats = Array.isArray(child.material) ? child.material : [child.material];
+      for (var i = 0; i < mats.length; i++) {
+        var mat = mats[i];
+        if (!mat) continue;
+        if (mat.color) mat.color.copy(brandColor);
+        if (mat.isMeshStandardMaterial || mat.isMeshPhysicalMaterial) {
+          mat.metalness = 1;
+          mat.roughness = 0.2;
+          mat.envMapIntensity = 1.05;
+          mat.emissive.setRGB(0, 0, 0);
+          mat.emissiveIntensity = 0;
+          if (mat.clearcoat !== undefined) {
+            mat.clearcoat = 0.22;
+            mat.clearcoatRoughness = 0.18;
+          }
+          mat.needsUpdate = true;
+        }
+      }
+    });
+  }
+
+  let model = null;
+  const loader = new GLTFLoader();
+  loader.load(
+    'model.gltf',
+    function (gltf) {
+      model = gltf.scene;
+      const box = new THREE.Box3().setFromObject(model);
+      const center = box.getCenter(new THREE.Vector3());
+      const size = box.getSize(new THREE.Vector3());
+      model.position.sub(center);
+      const maxDim = Math.max(size.x, size.y, size.z, 0.001);
+      const fit = 2.15 / maxDim;
+      model.scale.multiplyScalar(fit);
+      applyMetallicGoldToModel(model);
+      scene.add(model);
+      revealBg3D();
+    },
+    undefined,
+    function (err) {
+      console.warn('Chargement du modèle 3D impossible :', err);
+      revealBg3D();
+    }
+  );
+
+  const clock = new THREE.Clock();
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const autoSpeed = reduceMotion ? 0.08 : 0.32;
+  let autoAngle = 0;
+
+  function resize() {
+    const w = window.innerWidth;
+    const h = window.innerHeight;
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+    renderer.setPixelRatio(Math.min(2, window.devicePixelRatio || 1));
+    renderer.setSize(w, h, false);
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  function tick() {
+    requestAnimationFrame(tick);
+    const dt = clock.getDelta();
+    if (model) {
+      autoAngle += dt * autoSpeed;
+      model.rotation.y = autoAngle;
+    }
+    renderer.render(scene, camera);
+  }
+  tick();
 </script>
 <script defer src="https://sibforms.com/forms/end-form/build/main.js"></script>
 </body>
