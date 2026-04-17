@@ -315,19 +315,25 @@
     transform: translateY(-1px);
   }
 
-  /* Visuel app : uniquement le fichier image (ballup-app.png) à la racine du site */
-  .phone-section {
-    padding: 40px 24px 100px;
+  /* Capture app : image seule, aucun cadre CSS */
+  .app-screenshot {
+    padding: 32px 16px 80px;
     display: flex;
     justify-content: center;
+    align-items: center;
     opacity: 0;
     animation: fadeUp 1s 1s ease forwards;
   }
-  .phone-section img {
+  .app-screenshot img {
     display: block;
-    max-width: min(420px, 92vw);
-    width: 100%;
+    width: auto;
+    max-width: min(720px, 100%);
     height: auto;
+    margin: 0;
+    border: 0;
+    outline: none;
+    box-shadow: none;
+    background: transparent;
   }
 
   @keyframes fadeUp {
@@ -798,8 +804,8 @@
       justify-content: center;
     }
 
-    .phone-section {
-      padding: 28px 16px 64px;
+    .app-screenshot {
+      padding: 24px 12px 56px;
     }
 
     .stats {
@@ -1635,8 +1641,8 @@
   </div>
 </div>
 
-<div class="phone-section">
-  <img src="ballup-app.png" alt="Application BALLUP" decoding="async" />
+<div class="app-screenshot">
+  <img src="ballup-app.png" alt="" decoding="async" />
 </div>
 <!-- STATS -->
 <div class="stats">
