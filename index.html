@@ -315,19 +315,18 @@
     transform: translateY(-1px);
   }
 
-  /* Mockup téléphone — image ballup-phone-mockup.png (ta capture, fond noir) */
+  /* Visuel app : uniquement le fichier image (ballup-app.png) à la racine du site */
   .phone-section {
     padding: 40px 24px 100px;
     display: flex;
     justify-content: center;
-    align-items: center;
     opacity: 0;
     animation: fadeUp 1s 1s ease forwards;
   }
-  .phone-mockup-img {
+  .phone-section img {
     display: block;
-    width: auto;
-    max-width: min(440px, 94vw);
+    max-width: min(420px, 92vw);
+    width: 100%;
     height: auto;
   }
 
@@ -1636,9 +1635,8 @@
   </div>
 </div>
 
-<!-- Mockup téléphone (image) — remplace ballup-phone-mockup.png par ta capture si besoin -->
 <div class="phone-section">
-  <img class="phone-mockup-img" src="ballup-phone-mockup.png" alt="Application BALLUP sur smartphone" decoding="async" loading="lazy" />
+  <img src="ballup-app.png" alt="Application BALLUP" decoding="async" />
 </div>
 <!-- STATS -->
 <div class="stats">
