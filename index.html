@@ -43,6 +43,7 @@
   html {
     scroll-behavior: smooth;
     background: var(--black);
+    scrollbar-gutter: stable;
   }
 
   body {
@@ -107,6 +108,12 @@
     inset: 0;
     background: radial-gradient(ellipse 100% 85% at 50% 38%, rgba(8,8,6,0.28) 0%, rgba(8,8,6,0.72) 48%, rgba(8,8,6,0.94) 100%);
     pointer-events: none;
+  }
+  @media (max-width: 900px) {
+    #bg-3d-overlay {
+      /* Un peu plus de voile sur les bords : le logo reste lisible derrière le hero mobile */
+      background: radial-gradient(ellipse 118% 92% at 50% 36%, rgba(8,8,6,0.34) 0%, rgba(8,8,6,0.76) 52%, rgba(8,8,6,0.96) 100%);
+    }
   }
   body > *:not(#bg-3d-root):not(.cursor):not(.modal-overlay) {
     position: relative;
@@ -320,16 +327,25 @@
     padding: 40px 0 40px;
     display: flex;
     justify-content: center;
+    width: 100%;
+    box-sizing: border-box;
   }
   .phone-visual {
     overflow: visible;
-    width: 100%;
+    display: block;
+    width: min(100%, min(960px, 94vw));
     max-width: min(980px, 92vw);
+    margin-left: auto;
+    margin-right: auto;
+    transform: translateX(-14px);
   }
   .phone-visual img {
     display: block;
     width: 100%;
     height: auto;
+    margin: 0 auto;
+    object-fit: contain;
+    object-position: 47% 50%;
   }
 
   @keyframes fadeUp {
@@ -719,6 +735,18 @@
   }
   .logo-s { color: var(--gold); }
   .footer-logo .logo-text { font-size: 18px; }
+
+  /* Réduit l’espace hero → mockup quand la fenêtre se rétrécit (sans toucher au grand desktop) */
+  @media (max-width: 1200px) {
+    .hero {
+      padding: clamp(88px, 14vw, 120px) clamp(24px, 4vw, 40px) clamp(28px, 4vw, 56px);
+      min-height: auto;
+    }
+    .phone-section {
+      padding: clamp(18px, 2.8vw, 32px) 0 clamp(26px, 3.5vw, 40px);
+    }
+  }
+
   @media (max-width: 900px) {
     .apple-showcase-inner { flex-direction: column; gap: 40px; }
     .apple-feats { max-width: 100%; }
@@ -775,9 +803,9 @@
     }
 
     .hero {
-      padding: max(96px, calc(env(safe-area-inset-top) + 72px)) clamp(22px, 5.5vw, 28px) 56px;
-      min-height: 100vh;
-      min-height: 100dvh;
+      justify-content: flex-start;
+      min-height: 0;
+      padding: max(96px, calc(env(safe-area-inset-top) + 72px)) clamp(22px, 5.5vw, 28px) clamp(6px, 2vw, 20px);
     }
     .hero h1 {
       font-size: clamp(34px, 9.2vw, 64px);
@@ -793,6 +821,7 @@
       max-width: 360px;
       margin-left: auto;
       margin-right: auto;
+      margin-top: clamp(16px, 4vw, 32px);
     }
     .hero-actions .btn-primary,
     .hero-actions .btn-secondary {
@@ -805,7 +834,11 @@
     }
 
     .phone-visual {
+      width: min(100%, min(960px, 98vw));
       max-width: min(980px, 95vw);
+      margin-left: auto;
+      margin-right: auto;
+      transform: translateX(-8px);
     }
 
     .stats {
@@ -932,6 +965,20 @@
       padding: 12px;
       align-items: flex-end;
       padding-bottom: max(12px, env(safe-area-inset-bottom));
+    }
+    #modal-waitlist.modal-open {
+      align-items: center !important;
+      justify-content: center !important;
+      padding: max(8px, env(safe-area-inset-top)) 12px max(8px, env(safe-area-inset-bottom)) !important;
+    }
+    #modal-waitlist .modal-box {
+      border-radius: 18px !important;
+      max-height: min(88dvh, calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 16px)) !important;
+      overflow-x: hidden !important;
+      overflow-y: auto !important;
+      -webkit-overflow-scrolling: touch;
+      box-sizing: border-box !important;
+      width: 100%;
     }
     .modal-box {
       padding: 28px 20px 24px;
@@ -1119,18 +1166,12 @@
     position: relative;
     z-index: 2;
     pointer-events: auto;
-    /* Sinon le menu pays / drapeaux (position absolute) est coupé ou peint « derrière » la bulle */
-    overflow: visible !important;
-    overflow-x: visible !important;
-    overflow-y: visible !important;
-  }
-  /* Mobile : message succès + formulaire — scroll interne pour ne pas faire sortir le CTA de la bulle (listes pays Brevo souvent sous body) */
-  @media (max-width: 900px) {
-    #modal-waitlist.modal-open .modal-box {
-      overflow-x: hidden !important;
-      overflow-y: auto !important;
-      -webkit-overflow-scrolling: touch;
-    }
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch;
+    box-sizing: border-box !important;
+    max-height: min(85vh, calc(100vh - 40px)) !important;
+    max-height: min(85dvh, calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 32px)) !important;
   }
   /* Curseur système sur la liste d'attente (classe ajoutée par JS — évite les soucis avec :has() / curseur custom) */
   body.waitlist-modal-open {
@@ -1163,10 +1204,16 @@
     max-width: 680px;
     width: 100%;
     max-height: 80vh;
+    max-height: min(80dvh, calc(100dvh - 48px));
     overflow-y: auto;
+    overflow-x: hidden;
+    box-sizing: border-box;
     position: relative;
     transform: translateY(20px);
     transition: transform 0.3s ease;
+  }
+  #modal-waitlist .modal-box {
+    min-height: 0;
   }
   .modal-overlay.modal-open .modal-box {
     transform: translateY(0);
@@ -1410,6 +1457,8 @@
   }
   #modal-waitlist .waitlist-brevo .sib-form-block__button {
     width: 100%;
+    max-width: 100%;
+    box-sizing: border-box !important;
     padding: 0.9rem !important;
     background: linear-gradient(135deg, var(--gold-light), var(--gold), var(--gold-dark)) !important;
     border: none !important;
@@ -2289,6 +2338,26 @@
   const camera = new THREE.PerspectiveCamera(42, 1, 0.08, 200);
   camera.position.set(0, 0.15, 3.6);
 
+  function applyBg3dCameraForViewport() {
+    var w = window.innerWidth;
+    var h = window.innerHeight || 1;
+    var compact = w <= 900;
+    if (!compact) {
+      camera.fov = 42;
+      camera.position.set(0, 0.15, 3.6);
+      return;
+    }
+    var landscapePhone = w > h && h < 520;
+    if (landscapePhone) {
+      camera.fov = 48;
+      camera.position.set(0, 0.09, 4.25);
+      return;
+    }
+    /* Portrait / fenêtre étroite : FOV + recul pour que le logo ne soit pas trop zoomé ni rogné */
+    camera.fov = 54;
+    camera.position.set(0, 0.05, 4.65);
+  }
+
   const renderer = new THREE.WebGLRenderer({
     canvas,
     alpha: true,
@@ -2375,9 +2444,12 @@
   function resize() {
     const w = window.innerWidth;
     const h = window.innerHeight;
+    applyBg3dCameraForViewport();
     camera.aspect = w / h;
     camera.updateProjectionMatrix();
-    renderer.setPixelRatio(Math.min(2, window.devicePixelRatio || 1));
+    var dpr = window.devicePixelRatio || 1;
+    var maxDpr = w <= 900 ? 1.5 : 2;
+    renderer.setPixelRatio(Math.min(maxDpr, dpr));
     renderer.setSize(w, h, false);
   }
   resize();
