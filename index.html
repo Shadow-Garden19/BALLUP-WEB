@@ -315,133 +315,21 @@
     transform: translateY(-1px);
   }
 
-  /* PHONE MOCKUP */
+  /* Visuel app : ballup-app.png */
   .phone-section {
-    padding: 40px 0 100px;
+    padding: 40px 0 40px;
     display: flex;
     justify-content: center;
-    opacity: 0;
-    animation: fadeUp 1s 1s ease forwards;
   }
-  .phone-wrapper {
-    position: relative;
-    width: 280px;
-    height: 580px;
-  }
-  .phone-frame {
+  .phone-visual {
+    overflow: visible;
     width: 100%;
-    height: 100%;
-    background: var(--surface);
-    border-radius: 44px;
-    border: 1.5px solid rgba(201,168,76,0.18);
-    overflow: hidden;
-    position: relative;
-    box-shadow:
-      0 0 0 1px rgba(0,0,0,0.5),
-      0 40px 80px rgba(0,0,0,0.6),
-      0 0 60px rgba(201,168,76,0.08);
+    max-width: min(980px, 92vw);
   }
-  .phone-notch {
-    position: absolute;
-    top: 0; left: 50%;
-    transform: translateX(-50%);
-    width: 100px; height: 26px;
-    background: var(--black);
-    border-radius: 0 0 18px 18px;
-    z-index: 2;
-  }
-  .phone-screen {
+  .phone-visual img {
+    display: block;
     width: 100%;
-    height: 100%;
-    background: linear-gradient(160deg, #141210 0%, #080806 60%);
-    display: flex;
-    flex-direction: column;
-    padding: 40px 20px 20px;
-    gap: 12px;
-  }
-  .phone-header {
-    font-family: 'Syne', sans-serif;
-    font-size: 20px;
-    font-weight: 700;
-    color: white;
-    margin-top: 4px;
-  }
-  .phone-header span {
-    background: linear-gradient(135deg, var(--gold-light), var(--gold));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-  .phone-subtitle {
-    font-size: 11px;
-    color: var(--muted);
-    margin-top: -8px;
-  }
-  .sport-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    margin-top: 2px;
-  }
-  .sport-tag {
-    font-size: 10px;
-    padding: 4px 10px;
-    border-radius: 100px;
-    background: rgba(201,168,76,0.1);
-    border: 1px solid rgba(201,168,76,0.22);
-    color: var(--gold);
-    font-weight: 500;
-  }
-  .session-card {
-    background: rgba(201,168,76,0.04);
-    border: 1px solid rgba(201,168,76,0.1);
-    border-radius: 14px;
-    padding: 12px 14px;
-    display: flex;
-    gap: 10px;
-    align-items: center;
-  }
-  .session-avatar {
-    width: 36px; height: 36px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 15px;
-    flex-shrink: 0;
-  }
-  .session-info { flex: 1; }
-  .session-name { font-size: 11px; font-weight: 500; color: white; }
-  .session-detail { font-size: 9.5px; color: var(--muted); margin-top: 2px; }
-  .session-badge {
-    font-size: 9px;
-    font-weight: 600;
-    padding: 3px 8px;
-    border-radius: 100px;
-    background: rgba(201,168,76,0.12);
-    color: var(--gold);
-    border: 1px solid rgba(201,168,76,0.28);
-  }
-  .phone-nav {
-    margin-top: auto;
-    display: flex;
-    justify-content: space-around;
-    background: rgba(201,168,76,0.04);
-    border: 1px solid rgba(201,168,76,0.1);
-    border-radius: 20px;
-    padding: 10px 0;
-  }
-  .nav-icon {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 3px;
-    font-size: 18px;
-  }
-  .nav-icon.active .nav-dot {
-    width: 4px; height: 4px;
-    background: var(--gold);
-    border-radius: 50%;
+    height: auto;
   }
 
   @keyframes fadeUp {
@@ -453,7 +341,7 @@
   .stats {
     border-top: 1px solid var(--border);
     border-bottom: 1px solid var(--border);
-    padding: 60px 48px;
+    padding: 40px 48px;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 40px;
@@ -913,12 +801,16 @@
     }
 
     .phone-section {
-      padding: 28px 16px 64px;
+      padding: 28px 12px 32px;
+    }
+
+    .phone-visual {
+      max-width: min(980px, 95vw);
     }
 
     .stats {
       grid-template-columns: repeat(2, 1fr);
-      padding: 36px 20px;
+      padding: 28px 20px;
       gap: 28px 14px;
     }
     .stat-number { font-size: 42px; }
@@ -1749,53 +1641,9 @@
   </div>
 </div>
 
-<!-- PHONE MOCKUP -->
-<div class="phone-section">
-  <div class="phone-wrapper">
-    <div class="phone-frame">
-      <div class="phone-notch"></div>
-      <div class="phone-screen">
-        <div class="phone-header">Bonjour, <span>Thomas</span> 👋</div>
-        <div class="phone-subtitle">3 sessions près de toi aujourd'hui</div>
-        <div class="sport-tags">
-          <span class="sport-tag">🎾 Tennis</span>
-          <span class="sport-tag">🏀 Basket</span>
-          <span class="sport-tag">⚽ Foot</span>
-          <span class="sport-tag">🏸 Badminton</span>
-        </div>
-        <div class="session-card">
-          <div class="session-avatar" style="background:rgba(201,168,76,0.1)">🎾</div>
-          <div class="session-info">
-            <div class="session-name">Tennis – Niveau intermédiaire</div>
-            <div class="session-detail">Court Boulogne · Aujourd'hui 18h · 0.8 km</div>
-          </div>
-          <span class="session-badge">Rejoindre</span>
-        </div>
-        <div class="session-card">
-          <div class="session-avatar" style="background:rgba(201,168,76,0.06)">🏀</div>
-          <div class="session-info">
-            <div class="session-name">Basket 3x3 – All levels</div>
-            <div class="session-detail">Stade Charléty · Demain 10h · 1.2 km</div>
-          </div>
-          <span class="session-badge">2 places</span>
-        </div>
-        <div class="session-card">
-          <div class="session-avatar" style="background:rgba(201,168,76,0.04)">⚽</div>
-          <div class="session-info">
-            <div class="session-name">Foot 5x5 – Compétitif</div>
-            <div class="session-detail">Terrain Vincennes · Dim 14h · 2.1 km</div>
-          </div>
-          <span class="session-badge" style="opacity:.5">Plein</span>
-        </div>
-        <div class="phone-nav">
-          <div class="nav-icon active">🏠<div class="nav-dot"></div></div>
-          <div class="nav-icon">🔍</div>
-          <div class="nav-icon">💬</div>
-          <div class="nav-icon">📍</div>
-          <div class="nav-icon">👤</div>
-        </div>
-      </div>
-    </div>
+<div class="phone-section reveal reveal-half">
+  <div class="phone-visual">
+    <img src="ballup-app.png?v=20260419c" alt="Maquette BALLUP : deux téléphones avec sessions, profil et légendes intégrées à l’image." decoding="async" onerror="this.onerror=null;this.src='ballup-app.jpg?v=20260419c';" />
   </div>
 </div>
 <!-- STATS -->
@@ -2135,13 +1983,35 @@
     el.addEventListener('mouseleave', () => cursor.classList.remove('big'));
   });
 
-  const reveals = document.querySelectorAll('.reveal');
+  function revealVisible(target) {
+    /* Double rAF : laisse le navigateur peindre l’état initial (.reveal sans .visible) pour que la transition CSS parte bien */
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () {
+        target.classList.add('visible');
+      });
+    });
+  }
+
+  const reveals = document.querySelectorAll('.reveal:not(.reveal-half)');
   const observer = new IntersectionObserver(entries => {
     entries.forEach(e => {
-      if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+      if (!e.isIntersecting) return;
+      observer.unobserve(e.target);
+      revealVisible(e.target);
     });
   }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
   reveals.forEach(el => observer.observe(el));
+
+  /* Mockup téléphones : animation seulement quand au moins ~50 % du bloc est visible */
+  const revealsHalf = document.querySelectorAll('.reveal-half');
+  const observerHalf = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.intersectionRatio < 0.5) return;
+      observerHalf.unobserve(e.target);
+      revealVisible(e.target);
+    });
+  }, { threshold: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1] });
+  revealsHalf.forEach(el => observerHalf.observe(el));
 
   window.addEventListener('scroll', () => {
     const nav = document.getElementById('nav');
